@@ -1,13 +1,32 @@
-# Vue2-editor demo
+# Vue Js Editor demo
+
+## Move into `vue2-server-image-upload` folder
+
+```
+cd vue2-server-image-upload
+
+```
+
+##Now change the permission of `image` folder to 777
+
+```
+
+ sudo chmod -R 777 image
+
+```
 
 
-## Move into vue2-editor-demo folder
+
+## Project setup
+
+
+## Move into `vue2-editor-demo` folder
 
 ```
 cd vue2-editor-demo
 ```
 
-## Project setup
+## Install node modules
 
 ```
 yarn install
@@ -17,6 +36,9 @@ yarn install
 ```
 yarn run serve
 ```
+
+
+## Optional
 
 ### Compiles and minifies for production
 ```
