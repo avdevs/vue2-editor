@@ -1,4 +1,4 @@
-# quill_image
+# Vue2-editor demo
 
 
 ## Move into vue2-editor-demo folder
