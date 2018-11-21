@@ -7,7 +7,7 @@ cd vue2-server-image-upload
 
 ```
 
-##Now change the permission of `image` folder to 777
+## Now change the permission of `image` folder to 777
 
 ```
 
