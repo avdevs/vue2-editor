@@ -20,7 +20,7 @@ if(isset($_FILES['image'])){
         }
 
         if(move_uploaded_file($file_tmp,dirname(__FILE__)."/image/".$file_name)) {
-            echo json_encode('http://'.$_SERVER['HTTP_HOST'].'/vue2-server-image-upload/image/'.$file_name);
+            echo json_encode('http://'.$_SERVER['HTTP_HOST'].'/vue2-editor/vue2-server-image-upload/image/'.$file_name);
         } else {
             echo json_encode('Not uploaded');
         }

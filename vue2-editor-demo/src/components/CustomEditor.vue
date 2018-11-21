@@ -31,7 +31,7 @@
                             modules: ['Resize', 'DisplaySize', 'Toolbar']
                         },
                         imageUpload: {
-                            url: "http://localhost/vue2-server-image-upload/image.php",
+                            url: "http://localhost/vue2-editor/vue2-server-image-upload/image.php",
                             method: "POST",
                             callbackOK: (serverResponse, next) => {
                                 next(serverResponse);
