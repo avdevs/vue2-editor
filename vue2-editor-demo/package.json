@@ -9,8 +9,6 @@
   },
   "dependencies": {
     "@appsflare/quill-image-resize-module": "^3.0.3",
-    "axios": "^0.18.0",
-    "quill-image-drop-module": "^1.0.3",
     "quill-image-upload": "^0.1.2",
     "vue": "^2.5.17",
     "vue2-editor": "^2.6.6"

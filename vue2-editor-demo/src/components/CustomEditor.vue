@@ -8,7 +8,6 @@
 
 <script>
     import {VueEditor} from 'vue2-editor'
-    import {ImageDrop} from 'quill-image-drop-module'
     import ImageResize from '@appsflare/quill-image-resize-module'
     import {ImageUpload} from 'quill-image-upload'
 
@@ -20,13 +19,11 @@
             return {
                 content: '',
                 customModulesForEditor: [
-                    {alias: 'imageDrop', module: ImageDrop},
                     {alias: 'imageResize', module: ImageResize},
                     {alias: 'imageUpload', module: ImageUpload}
                 ],
                 editorSettings: {
                     modules: {
-                        imageDrop: true,
                         imageResize: {
                             modules: ['Resize', 'DisplaySize', 'Toolbar']
                         },
