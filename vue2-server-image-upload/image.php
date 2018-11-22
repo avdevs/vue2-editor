@@ -1,6 +1,10 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    exit(json_encode($_SERVER['REQUEST_METHOD'].' method not allowed'));
+}
+
 if (isset($_FILES['image'])) {
     $errors = array();
     $file_name = $_FILES['image']['name'];
@@ -9,31 +13,34 @@ if (isset($_FILES['image'])) {
     $file_type = $_FILES['image']['type'];
     $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
 
-    $expensions = array("jpeg", "jpg", "png");
+    $expensions = array("jpeg", "jpg", "png", "gif");
 
     if (in_array($file_ext, $expensions) === false) {
         $errors[] = "extension not allowed, please choose a JPEG or PNG file.";
     }
 
+    $image_url = '//' . $_SERVER['HTTP_HOST'] . '/vue2-editor/vue2-server-image-upload/image/';
+    $image_path = dirname(__FILE__) . "/image/";
+    $new_size = 1920;
+
     if (empty($errors) == true) {
-        if (file_exists(dirname(__FILE__) . "/image/" . $file_name)) {
-            unlink(dirname(__FILE__) . "/image/" . $file_name);
+        if (file_exists($image_path . $file_name)) {
+            unlink($image_path . $file_name);
         }
 
-        if (move_uploaded_file($file_tmp, dirname(__FILE__) . "/image/" . $file_name)) {
-            $resize = resize(1920, dirname(__FILE__) . "/image/" . $file_name, dirname(__FILE__) . "/image/" . $file_name);
+        if (move_uploaded_file($file_tmp, $image_path . $file_name)) {
+            $resize = resize($new_size, $image_path . $file_name, $image_path . $file_name);
             if(!$resize){
-                echo json_encode('http://' . $_SERVER['HTTP_HOST'] . '/vue2-editor/vue2-server-image-upload/image/' . $file_name);
+                exit(json_encode($image_url . $file_name));
             } else {
-                echo json_encode('http://' . $_SERVER['HTTP_HOST'] . '/vue2-editor/vue2-server-image-upload/image/' . $resize);
+                exit(json_encode($image_url . $resize));
             }
         } else {
-            echo json_encode('Not uploaded');
+            exit(json_encode('issue with move upload'));
         }
     } else {
-        echo json_encode($errors[0]);
+        exit(json_encode($errors[0]));
     }
-    exit();
 }
 
 function resize($newWidth, $targetFile, $originalFile)
@@ -64,7 +71,7 @@ function resize($newWidth, $targetFile, $originalFile)
                 break;
 
             default:
-                throw new Exception('Unknown image type.');
+                return false;
         }
 
         $img = $image_create_func($originalFile);
