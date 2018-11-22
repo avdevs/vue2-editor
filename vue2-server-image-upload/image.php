@@ -21,10 +21,11 @@ if (isset($_FILES['image'])) {
         }
 
         if (move_uploaded_file($file_tmp, dirname(__FILE__) . "/image/" . $file_name)) {
-            if (resize(1920, dirname(__FILE__) . "/image/" . $file_name, dirname(__FILE__) . "/image/" . $file_name)) {
+            $resize = resize(1920, dirname(__FILE__) . "/image/" . $file_name, dirname(__FILE__) . "/image/" . $file_name);
+            if(!$resize){
                 echo json_encode('http://' . $_SERVER['HTTP_HOST'] . '/vue2-editor/vue2-server-image-upload/image/' . $file_name);
             } else {
-                echo json_encode('Not uploaded');
+                echo json_encode('http://' . $_SERVER['HTTP_HOST'] . '/vue2-editor/vue2-server-image-upload/image/' . $resize);
             }
         } else {
             echo json_encode('Not uploaded');
@@ -40,7 +41,7 @@ function resize($newWidth, $targetFile, $originalFile)
     $info = getimagesize($originalFile);
     list($width, $height) = $info;
 
-    if ($width > 1920) {
+    if ($width > $newWidth) {
         $mime = $info['mime'];
 
         switch ($mime) {
@@ -78,6 +79,9 @@ function resize($newWidth, $targetFile, $originalFile)
 
         $targetFile = preg_replace('/\\.[^.\\s]{3,4}$/', '', $targetFile);
         $image_save_func($tmp, "$targetFile.$new_image_ext");
+
+        return basename("$targetFile.$new_image_ext");
     }
-    return true;
+
+    return false;
 }
